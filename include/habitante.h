@@ -64,31 +64,31 @@ void habitante_setEndereco(Habitante h, char *cep, char face, double numero, cha
 void habitante_setCpf(Habitante h, const char *cpf);
 
 /** @brief Atualiza o nome do habitante.
- * @param hab Ponteiro para o habitante.
+ * @param h Ponteiro para o habitante.
  * @param nome Novo nome.
  */
 void habitante_setNome(Habitante h, const char *nome);
 
 /**  @brief Atualiza o sobrenome do habitante.
- * @param hab Ponteiro para o habitante.
+ * @param h Ponteiro para o habitante.
  *  @param sobrenome Novo sobrenome.
  */
 void habitante_setSobrenome(Habitante h, const char *sobrenome);
 
 /** @brief Atualiza o sexo do habitante.
- *  @param hab Ponteiro para o habitante.
+ *  @param h Ponteiro para o habitante.
  *  @param sexo Novo caractere de sexo.
  */
 void habitante_setSexo(Habitante h, char sexo);
 
 /** @brief Atualiza a data de nascimento do habitante.
- *  @param hab Ponteiro para o habitante.
+ *  @param h Ponteiro para o habitante.
  *  @param data Nova data de nascimento.
  */
 void habitante_setDataNascimento(Habitante h, const char *data);
 
 /** @brief Força a mudança do status de moradia (sem-teto).
- *  @param hab Ponteiro para o habitante.
+ *  @param h Ponteiro para o habitante.
  *  @param status True para sem-teto, false se possuir moradia.
  */
 void habitante_setSemTeto(Habitante h, bool status);
@@ -96,25 +96,25 @@ void habitante_setSemTeto(Habitante h, bool status);
 // Setters de endereço.
 
 /** @brief Atualiza o CEP da moradia.
- * @param hab Ponteiro para o habitante.
+ * @param h Ponteiro para o habitante.
  * @param cep Novo CEP.
  */
 void habitante_setCep(Habitante h, const char *cep);
 
 /** @brief Atualiza a face da moradia.
- * @param hab Ponteiro para o habitante.
+ * @param h Ponteiro para o habitante.
  * @param face Nova face ('N', 'S', 'L' ou 'O').
  */
 void habitante_setFace(Habitante h, char face);
 
 /** @brief Atualiza a distância/número da casa.
- * @param hab Ponteiro para o habitante.
+ * @param h Ponteiro para o habitante.
  * @param numero Novo numero da casa.
  */
 void habitante_setNumerCcasa(Habitante h, double numero);
 
 /** @brief Atualiza o complemento da moradia.
- * @param hab Ponteiro para o habitante.
+ * @param h Ponteiro para o habitante.
  * @param complemento Novo complemento.
  */
 void habitante_setComplemento(Habitante h, const char *complemento);
@@ -125,56 +125,56 @@ void habitante_setComplemento(Habitante h, const char *complemento);
 //******************************************** */
 
 /** @brief Obtém o CPF de um habitante.
- * @param hab Ponteiro constante para o habitante.
+ * @param h Ponteiro constante para o habitante.
  *  @return String constante com o CPF.
  */
-const char habitante_getCpf(const Habitante h);
+const char* habitante_getCpf(const Habitante h);
 
 /** @brief Obtém o nome de um habitante.
- * @param hab Ponteiro constante para o habitante.
+ * @param h Ponteiro constante para o habitante.
  * @return String constante com o nome.
  */
-const char habitante_getNome(const Habitante h);
+const char* habitante_getNome(const Habitante h);
 
 /** @brief Obtém o sobrenome de um habitante.
- * @param hab Ponteiro constante para o habitante.
+ * @param h Ponteiro constante para o habitante.
  * @return String com o sobrenome.
  */
-const char habitante_getSobrenome(const Habitante h);
+const char* habitante_getSobrenome(const Habitante h);
 
 /** @brief Obtém o sexo de um habitante.
- * @param hab Ponteiro constante para o habitante.
+ * @param h Ponteiro constante para o habitante.
  * @return Caractere representante do sexo.
  */
 char habitante_getSexo(const Habitante h);
 
 /** @brief Obtém a data de nascimento de um habitante.
- * @param hab Ponteiro constante para o habitante.
+ * @param h Ponteiro constante para o habitante.
  * @return String constante com a data de nascimento.
  */
-const char hitante_getDataNascimento(const Habitante h);
+const char* habitante_getDataNascimento(const Habitante h);
 
 // Getters de endereço.
 
-const char hitante_getCep(const Habitante h);
+const char* habitante_getCep(const Habitante h);
 
 /** @brief Obtém a face da quadra onde o habitante mora.
- * @param hab Ponteiro constante para o habitante.
+ * @param h Ponteiro constante para o habitante.
  * @return Caractere da face, ou '\0' se for sem-teto.
  */
 char habitante_getFace(const Habitante h);
 
 /** @brief Obtém o número da casa onde o habitante mora.
- * @param hab Ponteiro constante para o habitante.
+ * @param h Ponteiro constante para o habitante.
  * @return Valor numérico da casa, ou -1.0 se for sem-teto.
  */
 double habitante_getNumeroCasa(const Habitante h);
 
 /** @brief Obtém o complemento do endereço do habitante.
- * @param hab Ponteiro constante para o habitante.
+ * @param h Ponteiro constante para o habitante.
  * @return String constante com o complemento, ou NULL se for sem-teto.
  */
-const char habitante_getComplemento(const Habitante h);
+const char* habitante_getComplemento(const Habitante h);
 
 
 //******************************************** */
