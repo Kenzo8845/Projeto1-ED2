@@ -5,6 +5,19 @@
 #include <stdbool.h>
 #include <inttypes.h>
 
+/** Este módulo define as funções básicas para criação e manipulação dos arquivos Hash Extensivel.
+ * O hash, é uma forma de organiação de dados com persistência em disco.
+ * O usuário ao passar uma chave e o dadona ser guardado, seu conteúdo 
+ * é alocado ao um bucket (espaço físico no disco).
+ * 
+ * Hash file extensivel:
+ * Por se tratar de um Hash Extensivel, utilizado em sistemas com grande densidade de dados,
+ * os buckets se extendes sozinhos, dobrando de tamanho quando necessario.
+ * Os dados sobrevivem o fechamento do programada.
+ * A busca de um dado por meio da chave é rápida.
+ */
+
+
 typedef struct Hash Hash;
 
 
