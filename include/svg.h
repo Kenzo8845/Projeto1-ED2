@@ -1,0 +1,73 @@
+#ifndef SVG_H
+#define SVG_H
+
+#include <stdio.h>
+#include "quadra.h"
+
+/**
+ * @brief Escreve as tags iniciais de um arquivo SVG.
+ * @param arquivo Arquivo .svg aberto para escrita.
+ */
+void svg_iniciar(FILE *arquivo);
+
+/**
+ * @brief Escreve a tag de fechamento do arquivo SVG.
+ * @param arquivo Arquivo .svg aberto para escrita.
+ */
+void svg_fechar(FILE *arquivo);
+
+/**
+ * @brief Desenha o retângulo de uma quadra com seu CEP centralizado.
+ * @param arquivo Arquivo .svg aberto.
+ * @param q Quadra a desenhar.
+ */
+void svg_desenhar_quadra(FILE *arquivo, const Quadra q);
+
+/**
+ * @brief Desenha um X vermelho na âncora da quadra (usado em rq).
+ * @param arquivo Arquivo .svg aberto.
+ * @param q  Quadra removida.
+ */
+void svg_marcar_remocao_quadra(FILE *arquivo, const Quadra q);
+
+/**
+ * @brief Desenha a contagem de moradores por face e o total no centro da quadra (usado em pq).
+ * @param arquivo Arquivo .svg aberto.
+ * @param q Quadra consultada.
+ * @param faceN Moradores na face N.
+ * @param faceS Moradores na face S.
+ * @param faceL Moradores na face L.
+ * @param faceO Moradores na face O.
+ * @param total Total de moradores.
+ */
+void svg_desenhar_contagem_moradores(FILE *arquivo, const Quadra q, int faceN, int faceS, int faceL, int faceO, int total);
+
+/**
+ * @brief Desenha uma cruz vermelha no endereço de um falecido (usado em rip).
+ * @param arquivo Arquivo .svg aberto.
+ * @param q Quadra onde o habitante morava.
+ * @param face Face da quadra onde morava.
+ * @param num Número (distância) da casa na face.
+ */
+void svg_marcar_obito(FILE *arquivo, const Quadra q, char face, double num);
+
+/**
+ * @brief Desenha um quadrado vermelho com o CPF no endereço de destino de uma mudança (usado em mud).
+ * @param arquivo Arquivo .svg aberto.
+ * @param q Quadra de destino.
+ * @param face Face de destino.
+ * @param num Número de destino.
+ * @param cpf CPF do morador que se mudou.
+ */
+void svg_marcar_mudanca(FILE *arquivo, const Quadra q, char face, double num, const char *cpf);
+
+/**
+ * @brief Desenha um círculo preto no endereço onde ocorreu o despejo (usado em dspj).
+ * @param arquivo Arquivo .svg aberto.
+ * @param q  Quadra onde ocorreu o despejo.
+ * @param face Face da quadra.
+ * @param num Número da casa.
+ */
+void svg_marcar_despejo(FILE *arquivo, const Quadra q, char face, double num);
+
+#endif

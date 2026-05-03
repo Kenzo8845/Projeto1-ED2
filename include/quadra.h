@@ -43,6 +43,12 @@ void quadra_destructor(Quadra q);
 //******************************************** //
 
 /**
+ * @brief Pega o tamanho em bytes da estrutura Quadra.
+ * @return size_t Tamanho em bytes de Quadra.
+ */
+size_t quadra_getSize();
+
+/**
  * @brief Pega o CEP de um determinada quadra.
  * @param q A quadra escolhida.
  * @return const char* O CEP da quadra.
