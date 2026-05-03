@@ -42,6 +42,7 @@ Habitante habitante_constructor(const char *cpf, const char *nome,
  */
 void habitante_destructor(Habitante h);
 
+
 //******************************************** */
 //                Metodos set 
 //******************************************** */
@@ -123,6 +124,12 @@ void habitante_setComplemento(Habitante h, const char *complemento);
 //******************************************** */
 //                Metodos get 
 //******************************************** */
+
+/**
+ * @brief Pega o tamanho em bytes da estrutura Habitante.
+ * @return size_t Tamanho em bytes de habitante.
+ */
+size_t habitante_getSize();
 
 /** @brief Obtém o CPF de um habitante.
  * @param h Ponteiro constante para o habitante.
