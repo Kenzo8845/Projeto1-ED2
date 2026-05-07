@@ -2,6 +2,8 @@
 #define SVG_H
 
 #include <stdio.h>
+
+#include "../include/hash.h"
 #include "quadra.h"
 
 /**
@@ -22,6 +24,15 @@ void svg_fechar(FILE *arquivo);
  * @param q Quadra a desenhar.
  */
 void svg_desenhar_quadra(FILE *arquivo, const Quadra q);
+
+/**
+ * @brief Varre o hash de quadras e desenha todas as quadras presentes.
+ * Deve ser chamada após o processamento do .qry para que apenas
+ * as quadras que sobreviveram (não removidas por rq) sejam desenhadas.
+ * @param arquivo Ponteiro para o arquivo svg.
+ * @param tabela_quadras ponteiro para o hash de quadras para conseguir pegar o estado final delas.
+ */
+void svg_desenhar_todas_quadras(FILE *arquivo, Hash *tabela_quadras);
 
 /**
  * @brief Desenha um X vermelho na âncora da quadra (usado em rq).
@@ -64,10 +75,17 @@ void svg_marcar_mudanca(FILE *arquivo, const Quadra q, char face, double num, co
 /**
  * @brief Desenha um círculo preto no endereço onde ocorreu o despejo (usado em dspj).
  * @param arquivo Arquivo .svg aberto.
- * @param q  Quadra onde ocorreu o despejo.
+ * @param q Quadra onde ocorreu o despejo.
  * @param face Face da quadra.
  * @param num Número da casa.
  */
 void svg_marcar_despejo(FILE *arquivo, const Quadra q, char face, double num);
+
+/**
+ * @brief Copia todos os elementos de um svg para outro, usado depois do qry.
+ * gera um svg somente com as marcações do qry, e copia elas por sima do outro svg,
+ * que terá somente as quadras finais.
+ */
+void svg_copiar(FILE *dst, FILE *src);
 
 #endif

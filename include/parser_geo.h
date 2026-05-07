@@ -12,6 +12,7 @@
  * por ele (corb, corp).
  * Quando uma quadra é criada, ela é adicionada ao arquivo hash, e depois é limpa da memória RAM, 
  * previnindo memory leaks.
+ * Ao criar quadras, elas ja sao desenhaas num arquivo svg, que é uma das saidas.
  */
 
 
@@ -19,7 +20,8 @@
  * @brief Lê o arquivo .geo e popula a tabela hash de quadras.
  * @param caminho_arquivo Caminho completo para o arquivo .geo a ser lido.
  * @param tabela_quadras Ponteiro para a Hash Extensível onde as quadras serão salvas.
+ * @param svg_geo Ponteiro para o arquivo SVG de saída onde serão desenhadaas as quadras iniciais.
  */
-void parser_geo_processar(const char* caminho_arquivo, Hash* tabela_quadras);
+void parser_geo_processar(const char* caminho_arquivo, Hash* tabela_quadras, FILE* svg_geo);
 
 #endif

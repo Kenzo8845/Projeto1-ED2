@@ -24,10 +24,10 @@ typedef struct Hash Hash;
 
 /**
  * @brief Cria um novo hash extensível zerado, associado ao arquivo file_name.
- *        O arquivo é aberto em modo "w+b" (cria ou trunca).
+ * O arquivo é aberto em modo "w+b" (cria ou trunca).
  * @param file_name Caminho do arquivo .hf a criar.
  * @param bucket_size Tamanho em bytes de cada bucket (deve ser grande o
- *        suficiente para conter pelo menos um registro + cabeçalho).
+ * suficiente para conter pelo menos um registro + cabeçalho).
  * @return Ponteiro para o Hash criado, ou NULL em caso de erro.
  */
 Hash *hash_create(const char *file_name, size_t bucket_size);
@@ -45,44 +45,38 @@ void hash_destroy(Hash *h);
 
 /**
  * @brief Insere um dado no hash.
- * @param h     Hash de destino.
+ * @param h  Hash de destino.
  * @param data  Ponteiro para o dado a ser copiado no arquivo.
- * @param key   Chave de hashing (64 bits).
- * @param size  Tamanho em bytes do dado apontado por data.
+ * @param key Chave de hashing.
+ * @param size Tamanho em bytes do dado apontado por data.
  * @return true em caso de sucesso, false em caso de erro.
  */
 bool hash_insert(Hash *h, void *data, uint64_t key, size_t size);
 
 /**
  * @brief Busca um dado no hash pela chave.
- * @param h    Hash a consultar.
- * @param key  Chave do registro procurado.
+ * @param h Hash a consultar.
+ * @param key Chave do registro procurado.
  * @param size Ponteiro de saída: receberá o tamanho em bytes do dado retornado.
- *             Pode ser NULL se o tamanho não for necessário.
+ * Pode ser NULL se o tamanho não for necessário.
  * @return Ponteiro para uma cópia heap-alocada do dado, ou NULL se não
- *         encontrado. O chamador é responsável por chamar free().
+ * encontrado. O chamador é responsável por chamar free().
  */
 void *hash_search(Hash *h, uint64_t key, size_t *size);
 
 /**
  * @brief Remove um dado do hash pela chave.
- *        O slot é compactado internamente (sem tombstones).
- * @param h    Hash a modificar.
- * @param key  Chave do registro a remover.
+ * O slot é compactado internamente (sem tombstones).
+ * @param h Hash a modificar.
+ * @param key Chave do registro a remover.
  * @param size Ponteiro de saída com o tamanho do dado removido. Pode ser NULL.
  * @return Ponteiro para uma cópia heap-alocada do dado removido, ou NULL se
  *         não encontrado. O chamador é responsável por chamar free().
  */
 void *hash_remove(Hash *h, uint64_t key, size_t *size);
 
-
-/* ==========================================================================
-   Acesso interno (necessário para varredura sequencial pelo parser_qry)
-   ========================================================================== */
-
 /**
  * @brief Retorna o FILE* do arquivo .hf aberto internamente.
- *        Usado pela varredura sequencial de parser_qry.c.
  */
 FILE *hash_get_file(Hash *h);
 
@@ -103,8 +97,8 @@ size_t hash_get_bucket_size(Hash *h);
 
 /**
  * @brief Gera um arquivo-texto legível (.hfd) com a representação esquemática
- *        do conteúdo do hash: diretório, buckets, registros e expansões.
- * @param h         Hash a ser despejado.
+ * do conteúdo do hash: diretório, buckets, registros e expansões.
+ * @param h Hash a ser despejado.
  * @param file_name Caminho do arquivo .hfd a criar.
  */
 void hash_dump(Hash *h, const char *file_name);

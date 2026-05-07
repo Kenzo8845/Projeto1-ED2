@@ -10,7 +10,6 @@
  * largura (w), altura (h), um CEP identificador, e propriedades visuais para o SVG.
  */
 
-
 typedef struct stQuadra* Quadra;
 
 
@@ -165,11 +164,5 @@ void quadra_setCorb(const Quadra q, const char* novoCorb);
  * @param novoSw A nova largura de borda.
  */
 void quadra_setSw(const Quadra q, double novoSw);
-
-
-//******************************************** //
-//                 Funções
-//******************************************** //
-
 
 #endif
