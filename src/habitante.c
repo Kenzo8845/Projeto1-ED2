@@ -1,40 +1,25 @@
-#include "../include/habitante.h"
 #include <stdlib.h>
 #include <string.h>
 #include <assert.h>
 
+#include "../include/habitante.h"
 struct stEndereco {
-    char *cep;
+    char cep[16];
     char face;
     double numero;
-    char *complemento;
+    char complemento[64];
 };
 
 struct stHabitante {
-    char *cpf;
-    char *nome;
-    char *sobrenome;
+    char cpf[16];
+    char nome[64];
+    char sobrenome[64];
     char sexo;
-    char *data_nascimento;
+    char data_nascimento[12];
     bool semTeto;
-    struct stEndereco *endereco;
+    struct stEndereco endereco;
 };
 
-//=============================================================================
-// Funções Auxiliares Internas
-//=============================================================================
-
-/*
- * Função auxiliar para duplicar strings de forma segura,
- * garantindo compatibilidade estrita com o padrão C99.
- */
-static char* clone_string(const char* src) {
-    if (src == NULL) return NULL;
-    char* dest = malloc(strlen(src) + 1);
-    assert(dest != NULL);
-    strcpy(dest, src);
-    return dest;
-}
 
 //=============================================================================
 // Construtor e Destrutor
@@ -43,17 +28,24 @@ static char* clone_string(const char* src) {
 Habitante habitante_constructor(const char *cpf, const char *nome,
     const char *sobrenome, char sexo, const char *data_nascimento) {
     
-    Habitante h = malloc(sizeof(struct stHabitante));
-    assert(h != NULL); // Garante que a memória foi alocada[cite: 3]
+    Habitante h = calloc(1, sizeof(struct stHabitante)); 
+    assert(h != NULL); 
 
-    h->cpf = clone_string(cpf);
-    h->nome = clone_string(nome);
-    h->sobrenome = clone_string(sobrenome);
+    strncpy(h->cpf, cpf, 15);
+    h->cpf[15] = '\0';
+
+    strncpy(h->nome, nome, 63);
+    h->nome[63] = '\0';
+
+    strncpy(h->sobrenome, sobrenome, 63);
+    h->sobrenome[63] = '\0';
+
     h->sexo = sexo;
-    h->data_nascimento = clone_string(data_nascimento);
+
+    strncpy(h->data_nascimento, data_nascimento, 11);
+    h->data_nascimento[11] = '\0';
     
-    h->semTeto = true;
-    h->endereco = NULL;
+    h->semTeto = true; 
 
     return h;
 }
@@ -61,19 +53,9 @@ Habitante habitante_constructor(const char *cpf, const char *nome,
 void habitante_destructor(Habitante h) {
     if (h == NULL) return;
 
-    free(h->cpf);
-    free(h->nome);
-    free(h->sobrenome);
-    free(h->data_nascimento);
-
-    if (h->endereco != NULL) {
-        free(h->endereco->cep);
-        free(h->endereco->complemento);
-        free(h->endereco);
-    }
-
     free(h);
 }
+
 
 //=============================================================================
 // Métodos Setters
@@ -81,13 +63,6 @@ void habitante_destructor(Habitante h) {
 
 void habitante_setEndereco(Habitante h, char *cep, char face, double numero, char *complemento) {
     assert(h != NULL);
-
-    if (h->endereco == NULL) {
-        h->endereco = malloc(sizeof(struct stEndereco));
-        assert(h->endereco != NULL);
-        h->endereco->cep = NULL;
-        h->endereco->complemento = NULL;
-    }
 
     habitante_setCep(h, cep);
     habitante_setFace(h, face);
@@ -99,20 +74,21 @@ void habitante_setEndereco(Habitante h, char *cep, char face, double numero, cha
 
 void habitante_setCpf(Habitante h, const char *cpf) {
     assert(h != NULL);
-    free(h->cpf);
-    h->cpf = clone_string(cpf);
+    strncpy(h->cpf, cpf, 16);
+    h->cpf[15] = '\0';
+    
 }
 
 void habitante_setNome(Habitante h, const char *nome) {
     assert(h != NULL);
-    free(h->nome);
-    h->nome = clone_string(nome);
+    strncpy(h->nome, nome, 64);
+    h->nome[63] = '\0';
 }
 
 void habitante_setSobrenome(Habitante h, const char *sobrenome) {
     assert(h != NULL);
-    free(h->sobrenome);
-    h->sobrenome = clone_string(sobrenome);
+    strncpy(h->sobrenome, sobrenome, 64);
+    h->sobrenome[63] = '\0';
 }
 
 void habitante_setSexo(Habitante h, char sexo) {
@@ -122,49 +98,44 @@ void habitante_setSexo(Habitante h, char sexo) {
 
 void habitante_setDataNascimento(Habitante h, const char *data) {
     assert(h != NULL);
-    free(h->data_nascimento);
-    h->data_nascimento = clone_string(data);
+    strncpy(h->data_nascimento, data, 12);
+    h->data_nascimento[11] = '\0';
 }
 
 void habitante_setSemTeto(Habitante h, bool status) {
     assert(h != NULL);
     h->semTeto = status;
-    
-    // Se tornou sem-teto, limpa os dados de endereço
-    if (status == true && h->endereco != NULL) {
-        free(h->endereco->cep);
-        free(h->endereco->complemento);
-        free(h->endereco);
-        h->endereco = NULL;
-    }
 }
 
 void habitante_setCep(Habitante h, const char *cep) {
-    assert(h != NULL && h->endereco != NULL);
-    free(h->endereco->cep);
-    h->endereco->cep = clone_string(cep);
+    assert(h != NULL);
+    strncpy(h->endereco.cep, cep, 16);
+    h->endereco.cep[15] = '\0';
 }
 
 void habitante_setFace(Habitante h, char face) {
-    assert(h != NULL && h->endereco != NULL);
-    h->endereco->face = face;
+    assert(h != NULL);
+    h->endereco.face = face;
 }
 
 void habitante_setNumerCcasa(Habitante h, double numero) {
-    assert(h != NULL && h->endereco != NULL);
-    h->endereco->numero = numero;
+    assert(h != NULL);
+    h->endereco.numero = numero;
 }
 
 void habitante_setComplemento(Habitante h, const char *complemento) {
-    assert(h != NULL && h->endereco != NULL);
-    free(h->endereco->complemento);
-    h->endereco->complemento = clone_string(complemento);
+    assert(h != NULL);
+    strncpy(h->endereco.complemento, complemento, 64);
+    h->endereco.complemento[63] = '\0';
 }
 
 //=============================================================================
 // Métodos Getters 
-// NOTA: Para compilar, os retornos de string DEVEM ser `const char*` no .h
 //=============================================================================
+
+size_t habitante_getSize() {
+    return sizeof(struct stHabitante);
+}
 
 const char* habitante_getCpf(const Habitante h) {
     assert(h != NULL);
@@ -193,26 +164,26 @@ const char* habitante_getDataNascimento(const Habitante h) {
 
 const char* habitante_getCep(const Habitante h) {
     assert(h != NULL);
-    if (h->semTeto || h->endereco == NULL) return NULL;
-    return h->endereco->cep;
+    if (h->semTeto) return NULL;
+    return h->endereco.cep;
 }
 
 char habitante_getFace(const Habitante h) {
     assert(h != NULL);
-    if (h->semTeto || h->endereco == NULL) return '\0';
-    return h->endereco->face;
+    if (h->semTeto) return '\0';
+    return h->endereco.face;
 }
 
 double habitante_getNumeroCasa(const Habitante h) {
     assert(h != NULL);
-    if (h->semTeto || h->endereco == NULL) return -1.0;
-    return h->endereco->numero;
+    if (h->semTeto ) return -1.0;
+    return h->endereco.numero;
 }
 
 const char* habitante_getComplemento(const Habitante h) {
     assert(h != NULL);
-    if (h->semTeto || h->endereco == NULL) return NULL;
-    return h->endereco->complemento;
+    if (h->semTeto ) return NULL;
+    return h->endereco.complemento;
 }
 
 //=============================================================================
@@ -236,9 +207,9 @@ void habitante_printInfoEndereco(FILE *txt, const Habitante h) {
         fprintf(txt, "Status: Sem-teto\n");
     } else {
         fprintf(txt, "Endereço: %s/%c/%.2f", 
-                h->endereco->cep, h->endereco->face, h->endereco->numero);
-        if (h->endereco->complemento != NULL && strlen(h->endereco->complemento) > 0) {
-            fprintf(txt, " - Compl: %s\n", h->endereco->complemento);
+                h->endereco.cep, h->endereco.face, h->endereco.numero);
+        if (strlen(h->endereco.complemento) > 0) {
+            fprintf(txt, " - Compl: %s\n", h->endereco.complemento);
         } else {
             fprintf(txt, "\n");
         }
